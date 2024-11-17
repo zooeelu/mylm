@@ -93,3 +93,114 @@ head(my_model$Residuals, 5)
 ```
 
 ### Comparing `my_lm()` with R's `lm()`
+In this section of the example, we will compare our my_lm() function with R's lm() function to ensure that the values we obtained above are accurate and just as efficient as the original.
+
+First let's run the same simple linear regression model but using R's lm() function:
+```{r}
+R_model <- lm(formula = Petal.Width ~ Sepal.Length, data = iris)
+R_model_summary <- summary(R_model)
+R_model_summary
+```
+
+To compare the accuracy and efficiency of our values and R's lm() values, we will use `all.equal` and `bench::mark` functions. Lets first compare the coefficient value table. We will make sure both coefficient tables are set as dataframes to ensure the right comparisons of values.
+```{r}
+R_model_coeffs <- data.frame(R_model_summary$coefficient)
+my_model_coeffs <-  data.frame(my_model$Coefficients)
+
+print(R_model_coeffs)
+print(my_model_coeffs)
+
+# accuracy
+all.equal(R_model_coeffs, my_model_coeffs)
+
+# efficiency
+bench::mark(R_model_coeffs, my_model_coeffs)
+```
+
+We can see that the `all.equal` function returns `TRUE` indicating that when it comes to looking at the coefficient table, our my_lm() function matches R's lm() function indicating that our function is running correctly. Additionally, we can see that our my_lm() function is also quite efficient and is even more efficient than R's lm() function for regular sized datasets.
+
+Similarly, lets also double check the R-squared, Adjusted R-squared, F Statistic, F Statistic p-value, fitted values, and residuals using the same method as above:
+```{r}
+# checking R-squared
+R_model_summary$r.squared
+my_model$adj.r.squared
+
+# accuracy
+all.equal(R_model_summary$r.squared, my_model$r.squared)
+
+# efficiency
+bench::mark(R_model_summary$r.squared, my_model$r.squared)
+```
+
+```{r}
+# checking the Adjusted R-squared
+R_model_summary$adj.r.squared
+my_model$adj.r.squared
+
+# accuracy
+all.equal(R_model_summary$adj.r.squared, my_model$adj.r.squared)
+
+# efficiency
+bench::mark(R_model_summary$adj.r.squared, my_model$adj.r.squared)
+```
+
+```{r}
+# checking F statistic 
+R_model_summary$fstatistic[[1]]
+my_model$fstatistic
+
+lm_f_p_value <- R_model_summary$fstatistic[[1]]  # F-statistic value
+lm_f_p_value <- pf(lm_f_p_value, df1 = R_model_summary$fstatistic[[2]], 
+                     df2 = R_model_summary$fstatistic[[3]], lower.tail = FALSE)
+lm_f_p_value
+my_model$F_statistic_P_Value
+
+# accuracy
+all.equal(lm_f_p_value, my_model$F_statistic_P_Value)
+
+# efficiency
+bench::mark(lm_f_p_value, my_model$F_statistic_P_Value)
+```
+
+
+```{r}
+# checking fitted values
+R_fitted <- as.vector(R_model$fitted.values)
+my_fitted <- as.vector(my_model$Fitted_Values)
+head(R_fitted)
+head(my_fitted)
+
+# accuracy
+all.equal(R_fitted, my_fitted)
+
+# efficiency
+bench::mark(R_fitted, my_fitted)
+```
+
+```{r}
+# checking residuals
+R_res<- as.vector(R_model_summary$residuals)
+my_res <- as.vector(my_model$Residuals)
+head(R_res)
+head(my_res)
+
+# accuracy
+all.equal(R_res, my_res)
+
+# efficiency
+bench::mark(R_res, my_res)
+```
+
+**From above, we can see that all the possible values from our my_lm() function matches R's lm() function. This shows that our my_lm() function is well constructed and produces accurate results. We can also see that all of our outputs using the my_lm() function has similar efficiency with not many big differences compared to R's lm() function for regular datasets. Our my_lm() function is accurate and is not inefficient.**
+
+
+
+
+
+
+
+
+
+
+
+
