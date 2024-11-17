@@ -1,34 +1,95 @@
 ---
-title: "my_lm() Tutorial"
+title: "my_lm() tutorial"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{tutorial}
+  %\VignetteIndexEntry{my_lm() tutorial}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>", fig.width=6, fig.height=4)
+options(tibble.print_min = 4L, tibble.print_max = 4L)
 ```
 
+The my_lm() function was created to mimic the usage of the lm() function to run a basic linear regression model as a means of practicing writing packages in R. 
+
+In this tutorial, we will go over the purpose of using the my_lm function I created as well as how to properly use it to ensure you get the results you want. We will also compare the accuracy and efficiency of my version of the lm function to R's official lm function in each example. This vignette will show you:
+
+* How to use my_lm() to run a basic simple linear model.
+* How to use my_lm() to run a multiple linear regression model with main effects, interaction effects etc.
+* How to look at the output of the model to see the results of your linear model such as coefficient estimates, T and F values, p-values, etc.
+* Comparisons between my_lm() and R's lm() function to show the accuracy and efficiency of my_lm() to the official lm() function
+
+## Example 1
+### Running the model using `my_lm()`
+
+First lets load the package "mylm" which contains our my_lm() function:
 ```{r setup}
 library(mylm)
 ```
 
+In our first example, we'll use R's built in R dataset "iris" to run our desired model
 ```{r}
-my_model <- my_lm(Petal.Width ~ Sepal.Length + Sepal.Width + Petal.Length, iris)
-lm_model <- lm(Petal.Width ~ Sepal.Length + Sepal.Width + Petal.Length, iris)
-summary(lm_model)
-
-my_model$Coefficients
-my_model$r.squared
-my_model$adj.r.squared
-my_model$fstatistic
-my_model$F_statistic_P_Value
-head(my_model$Fitted_Values)
-head(my_model$Residuals)
+head(iris)
 ```
 
+Suppose we are interested in studying the association between the Petal Width and the Sepal Length for the different species. Let's plot a basic scatterplot to get a better understanding of the type of association we might be looking for. 
+```{r, out.width}
+plot(iris$Sepal.Length, iris$Petal.Width,
+     main = "Petal Width \n vs. Sepal Length",
+     xlab = "Sepal Length", 
+     ylab = "Petal Width")
+```
+
+Suppose now after seeing the scatterplot of Petal Width vs. Sepal Length you're interested in testing the association between the two variable to see if the association between the two is significant. We can then use the my_lm() function I created to test this association. 
+
+The my_lm() function takes in two arguments: 
+
+* `formula`: a linear regression formula
+* `data`: a specified dataset that we want to run our model on
+
+Lets now write and run our simple linear regression formula using `my_lm()` testing the association between the response variable "Petal Width" and our predictor variable "Sepal Length": 
+```{r}
+my_model <- my_lm(formula = Petal.Width ~ Sepal.Length, data = iris)
+```
+
+To see the results of our model, we can call multiple different outputs using $. 
+
+For example, suppose we want to see the estimated coefficient values of our simple linear regression model as well as its corresponding standard error, t-values, and p-values. We can do this by running this line of code after our model has been run:
+
+```{r}
+my_model$Coefficients
+```
+
+Accessing "Coefficients" from running my_lm() will return a dataset consisting of all the coefficient values and the corresponding information 
+
+If we just want to see the coefficient values we can extract the first column of the output of `my_model$Coefficients`. Similarly, we can do the same if we want to extract just the standard errors, t-values, etc.
+```{r}
+my_model$Coefficients[1]
+
+my_model$Coefficients[2]
+
+my_model$Coefficients[1:2]
+```
+
+Similarly, using the same logic as above, we can also look at the results of using my_lm() to run a linear model to access the F statistic of the model and its corresponding P-value. We can also look at the R-squared and adjusted R-squared
+
+```{r}
+my_model$fstatistic
+
+my_model$F_statistic_P_Value
+
+my_model$r.squared
+
+my_model$adj.r.squared
+```
+
+Lastly, we can also access the model's fitted values and residual values if we ever decide to use them to do additional computational actions. We can follow similar steps as above to access these values. In this example, we will use the `head()` function to see the first 5 values of the fitted and residual values
+```{r}
+head(my_model$Fitted_Values, 5)
+
+head(my_model$Residuals, 5)
+```
+
+### Comparing `my_lm()` with R's `lm()`
