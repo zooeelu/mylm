@@ -6,7 +6,7 @@ The "mylm" package is a package that contains the my_lm() function which was cre
 
 ## Installation
 ```{r, eval = FALSE}
-devtools::install_github("zooeelu/my_lm_package")
+devtools::install_github("zooeelu/mylm")
 ```
 
 ## Usage
@@ -15,43 +15,38 @@ Examples ran below utilize some of R's built in datasets in order to run the my_
 ```r
 library(mylm)
 
-my_model <- my_lm(Depression ~ Age + Sex + R_E + Fatalism + Fatalism*Age, data1)
+my_model <- my_lm(formula = Petal.Width ~ Sepal.Length, data = iris)
 
 my_model$Coefficients
-#>                Estimate Std. Error    t value    Pr(>|t|)
-#> (Intercept)  -1.705600644 4.09957214 -0.4160436 0.677525414
-#> Age           0.036798726 0.06106627  0.6026032 0.546998127
-#> Sex           0.550000457 0.40963674  1.3426541 0.179886705
-#> R_E           0.233057017 0.42742296  0.5452609 0.585774730
-#> Fatalism      0.719410655 0.22058243  3.2614141 0.001170801
-#> Age:Fatalism -0.007013593 0.00327765 -2.1398234 0.032767757
-
-my_model$r.squared
-#> [1] 0.1131733
-my_model$adj.r.squared
-#> [1] 0.1058563
+#>                Estimate Std. Error   t value     Pr(>|t|)
+#> (Intercept)  -3.2002150 0.25688579 -12.45773 8.141394e-25
+#> Sepal.Length  0.7529176 0.04353017  17.29645 2.325498e-37
 
 my_model$fstatistic
-#> [1] 15.46707
+#> [1] 299.1673
 
 my_model$F_statistic_P_Value
-#> [1] 2.475408e-14
+#> [1] 2.325498e-37
 
-head(my_model$Fitted_Values)
-#>       [,1]
-#> 1 3.321588
-#> 2 3.321588
-#> 3 5.281537
-#> 4 6.223658
-#> 5 6.223658
-#> 6 3.350877
+my_model$r.squared
+#> [1] 0.6690277
 
-head(my_model$Residuals)
-#>         [,1]
-#> 1  7.6784122
-#> 2  7.6784122
-#> 3 -0.2815369
-#> 4 18.7763418
-#> 5 18.7763418
-#> 6  2.6491225
+my_model$adj.r.squared
+#> [1] 0.6667914
+
+head(my_model$Fitted_Values, 5)
+#>        [,1]
+#> 1 0.6396646
+#> 2 0.4890811
+#> 3 0.3384976
+#> 4 0.2632058
+#> 5 0.5643728
+
+head(my_model$Residuals, 5)
+#>          [,1]
+#> 1 -0.43966461
+#> 2 -0.28908109
+#> 3 -0.13849758
+#> 4 -0.06320582
+#> 5 -0.36437285
 ```
