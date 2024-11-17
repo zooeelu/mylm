@@ -1,0 +1,34 @@
+---
+title: "tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mylm)
+```
+
+```{r}
+my_model <- my_lm(Petal.Width ~ Sepal.Length + Sepal.Width + Petal.Length, iris)
+lm_model <- lm(Petal.Width ~ Sepal.Length + Sepal.Width + Petal.Length, iris)
+summary(lm_model)
+
+my_model$Coefficients
+my_model$r.squared
+my_model$adj.r.squared
+my_model$fstatistic
+my_model$F_statistic_P_Value
+head(my_model$Fitted_Values)
+head(my_model$Residuals)
+```
+
