@@ -18,8 +18,13 @@ various information on the linear regression model such as coefficient estimates
 Run a basic linear regression model using my version of the lm function as a package
 }
 \examples{
-library("sas7bdat")
-data1 <- read.sas7bdat("originaldata-1.sas7bdat")
-my_model <- my_lm(Depression ~ Age + Sex + R_E + Fatalism + Fatalism*Age, data1)
-
+my_model <- my_lm(Petal.Width ~ Sepal.Length + Sepal.Width + Petal.Length, iris)
+# to view information on the linear regression model otutput
+my_model$Coefficients
+my_model$r.squared
+my_model$adj.r.squared
+my_model$fstatistic
+my_model$F_statistic_P_Value
+head(my_model$Fitted_Values)
+head(my_model$Residuals)
 }
