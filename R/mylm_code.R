@@ -122,3 +122,5 @@ my_lm <- function(formula, data) {
 
   return(list_of_results)
 }
+
+##
