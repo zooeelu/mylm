@@ -1,7 +1,7 @@
-# my.lm.package
+# mylm package
 
 ## Overview
-my.lm.package is a package created to mimic the useage of the lm() function to run a basic linear regression model as a means of practicing writing packages in R. It can be used to study the association between multiple variables including interactions to help users make statistical inferences on their data. This function can return the corresponding linear model results such as a table of the coefficient estimates, standard errors, t-statistic values, and its corresponding p-values. It can also estimate how well the model fits the data using measurements such as the F statistic value and its p-value, R-squared, and adjusted R-squared values. Lastly, if interested, users may obtain the models fitted values and residual values.
+The "mylm" package is a package that contains the my_lm() function which was created to mimic the useage of the lm() function to run a basic linear regression model as a means of practicing writing packages in R. It can be used to study the association between multiple variables including interactions to help users make statistical inferences on their data. This function can return the corresponding linear model results such as a table of the coefficient estimates, standard errors, t-statistic values, and its corresponding p-values. It can also estimate how well the model fits the data using measurements such as the F statistic value and its p-value, R-squared, and adjusted R-squared values. Lastly, if interested, users may obtain the models fitted values and residual values.
 - `my_lm()`: runs a basic linear regression model using a user inputted formula and specified dataset to study the relationship between a response variable and select predictor variables.
 
 ## Installation
@@ -10,13 +10,10 @@ devtools::install_github("zooeelu/my_lm_package")
 ```
 
 ## Usage
-An example dataset file titled "originaldata-1.sas7bdat" within this repository can be used to run the lm() function as an example. 
+Examples ran below utilize some of R's built in datasets in order to run the my_lm() function. 
 
 ```r
-library(sas7bdat)
-library(my.lm.package)
-
-data <- read.sas7bdat("originaldata-1.sas7bdat")
+library(mylm)
 
 my_model <- my_lm(Depression ~ Age + Sex + R_E + Fatalism + Fatalism*Age, data1)
 
