@@ -2,29 +2,65 @@
 % Please edit documentation in R/mylm_code.R
 \name{my_lm}
 \alias{my_lm}
-\title{Run a basic linear regression model using my version of the lm function as a package}
+\title{Run a basic linear regression model}
 \usage{
 my_lm(formula, data)
 }
 \arguments{
-\item{formula}{a formula with the selected response and predicted variables to run the desired linear regression model}
+\item{formula}{a formula with the selected response and predicted variables to run the desired linear regression model (e.g. formula = response ~ var1 + var2 + var3)}
 
-\item{data}{specified datset from which the model will be ran on}
+\item{data}{specified data set from which the model will be ran on}
 }
 \value{
-various information on the linear regression model such as coefficient estimates, p-values, and R-squared
+1. A table of numeric coefficient estimates: estimates, standard errors, t-values, p-values
+
+2. A Numeric value for R-squared and adjusted R squared
+
+3. A Numeric value for F value and corresponding p-values
+
+4. A vector of fitted values and a vector of residuals
 }
 \description{
-Run a basic linear regression model using my version of the lm function as a package
+The my_lm function is a function under the mylm package which was created to mimic the usage of the lm() function in R to run a basic linear regression model as a means of practicing writing packages in R. It can be used to study the association between a chose response variable and multiple predictor variables including interactions (if desired) to help users make statistical inferences on their data.
+}
+\details{
+my_lm() can run basic linear regression models such as a model with just main effects, a model with interaction effects, a model with polynomial effects, and a model using a combination or all three types of effects.
 }
 \examples{
-my_model <- my_lm(Petal.Width ~ Sepal.Length + Sepal.Width + Petal.Length, iris)
+# Example 1 with main effects only
+my_model1 <- my_lm(formula = Petal.Width ~ Sepal.Length + Sepal.Width + Petal.Length, data = iris)
+
 # to view information on the linear regression model otutput
-my_model$Coefficients
-my_model$r.squared
-my_model$adj.r.squared
-my_model$fstatistic
-my_model$F_statistic_P_Value
-head(my_model$Fitted_Values)
-head(my_model$Residuals)
+my_model1$Coefficients
+my_model1$r.squared
+my_model1$adj.r.squared
+my_model1$fstatistic
+my_model1$F_statistic_P_Value
+head(my_model1$Fitted_Values)
+head(my_model1$Residuals)
+
+# Example 2 with interaction effects
+my_model2 <- my_lm(formula = mpg ~ cyl + disp + hp + drat + wt + wt*cyl, data = mtcars)
+
+#' # to view information on the linear regression model otutput
+my_model2$Coefficients
+my_model2$r.squared
+my_model2$adj.r.squared
+my_model2$fstatistic
+my_model2$F_statistic_P_Value
+head(my_model2$Fitted_Values)
+head(my_model2$Residuals)
+
+#' # Example 3 with interaction and polynomial effects
+my_model3 <- my_lm(formula = mpg ~ cyl + disp + hp + drat + wt + wt*cyl + I(hp^2), data = mtcars)
+
+#' # to view information on the linear regression model otutput
+my_model3$Coefficients
+my_model3$r.squared
+my_model3$adj.r.squared
+my_model3$fstatistic
+my_model3$F_statistic_P_Value
+head(my_model3$Fitted_Values)
+head(my_model3$Residuals)
+
 }
