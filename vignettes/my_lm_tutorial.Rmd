@@ -192,15 +192,3 @@ bench::mark(R_res, my_res)
 ```
 
 **From above, we can see that all the possible values from our my_lm() function matches R's lm() function. This shows that our my_lm() function is well constructed and produces accurate results. We can also see that all of our outputs using the my_lm() function has similar efficiency with not many big differences compared to R's lm() function for regular datasets. Our my_lm() function is accurate and is not inefficient.**
-
-
-
-
-
-
-
-
-
-
-
-
