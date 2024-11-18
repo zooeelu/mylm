@@ -50,3 +50,51 @@ head(my_model$Residuals, 5)
 #> 4 -0.06320582
 #> 5 -0.36437285
 ```
+
+```
+my_model <- my_lm(formula = mpg ~ cyl + hp + drat + wt + hp*wt + cyl*wt, data = mtcars)
+my_model$Coefficients
+#>                Estimate Std. Error     t value     Pr(>|t|)
+#> (Intercept) 51.39899665 9.11570457  5.63851058 7.216081e-06
+#> cyl         -0.10251425 2.61323413 -0.03922888 9.690195e-01
+#> hp          -0.11841982 0.07424414 -1.59500565 1.232765e-01
+#> drat        -0.45321259 1.42736049 -0.31751796 7.534874e-01
+#> wt          -7.61786425 2.50345640 -3.04293866 5.445009e-03
+#> hp:wt        0.02928176 0.02259772  1.29578391 2.068865e-01
+#> cyl:wt      -0.10537841 0.81956657 -0.12857822 8.987202e-01
+
+my_model$fstatistic
+#> [1] 32.83019
+
+my_model$F_statistic_P_Value
+#> [1] 1.097358e-10
+
+my_model$r.squared
+#> [1] 0.8873778
+
+my_model$adj.r.squared
+#> [1] 0.8603485
+
+head(my_model$Fitted_Values, 5)
+#>                       [,1]
+#> Mazda RX4         22.81385
+#> Mazda RX4 Wag     21.53142
+#> Datsun 710        25.89750
+#> Hornet 4 Drive    20.19315
+#> Hornet Sportabout 16.94995
+
+head(my_model$Residuals, 5)
+#>                         [,1]
+#> Mazda RX4         -1.8138525
+#> Mazda RX4 Wag     -0.5314215
+#> Datsun 710        -3.0975040
+#> Hornet 4 Drive     1.2068521
+#> Hornet Sportabout  1.7500521
+```
+
+
+
+
+
+
+
