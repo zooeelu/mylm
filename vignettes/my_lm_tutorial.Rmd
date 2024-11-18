@@ -22,7 +22,7 @@ In this tutorial, we will go over the purpose of using the my_lm function I crea
 * Comparisons between my_lm() and R's lm() function to show the accuracy and efficiency of my_lm() to the official lm() function
 
 ## Example 1
-### Running the model using `my_lm()`
+### Running the model using `my_lm()` for a simple linear regression
 
 First lets load the package "mylm" which contains our my_lm() function:
 ```{r setup}
@@ -192,3 +192,150 @@ bench::mark(R_res, my_res)
 ```
 
 **From above, we can see that all the possible values from our my_lm() function matches R's lm() function. This shows that our my_lm() function is well constructed and produces accurate results. We can also see that all of our outputs using the my_lm() function has similar efficiency with not many big differences compared to R's lm() function for regular datasets. Our my_lm() function is accurate and is not inefficient.**
+
+## Example 2
+### Running the model using `my_lm()` for a multiple linear regression with main effects and interaction effects
+
+Lets now write and run a multiple linear regression formula using `my_lm()` with the built in R dataset `mtcars`. In this example, we will test the association between the response variable "mpg" and several predictor variables including interactions: 
+```{r}
+my_model <- my_lm(formula = mpg ~ cyl + hp + drat + wt + hp*wt + cyl*wt, data = mtcars)
+```
+
+Like in Example 1, to see the results of our model, we can call multiple different outputs using $. To look at the coefficients we can run:
+
+```{r}
+my_model$Coefficients
+```
+
+If we just want to see the coefficient values we can extract the first column of the output of `my_model$Coefficients`. Similarly, we can do the same if we want to extract just the standard errors, t-values, etc. Example runs below:
+```{r}
+my_model$Coefficients[1]
+
+my_model$Coefficients[2]
+
+my_model$Coefficients[1:2]
+```
+
+We can also use the results of using my_lm() to run a linear model to access the F statistic of the model and its corresponding P-value. We can also look at the R-squared and adjusted R-squared
+
+```{r}
+my_model$fstatistic
+
+my_model$F_statistic_P_Value
+
+my_model$r.squared
+
+my_model$adj.r.squared
+```
+
+Lastly, we can also access the model's fitted values and residual values.
+```{r}
+head(my_model$Fitted_Values, 5)
+
+head(my_model$Residuals, 5)
+```
+
+### Comparing `my_lm()` with R's `lm()`
+In this section of the Example 2, we will compare our my_lm() function with R's lm() function to ensure that the values we obtained above are accurate and just as efficient as the original.
+
+Running the same multiple linear regression model but using R's lm() function:
+```{r}
+R_model <- lm(formula = mpg ~ cyl + hp + drat + wt + hp*wt + cyl*wt, data = mtcars)
+R_model_summary <- summary(R_model)
+R_model_summary
+```
+
+To compare the accuracy and efficiency of our values and R's lm() values, we will again use `all.equal` and `bench::mark` functions. 
+```{r}
+R_model_coeffs <- data.frame(R_model_summary$coefficient)
+my_model_coeffs <-  data.frame(my_model$Coefficients)
+
+print(R_model_coeffs)
+print(my_model_coeffs)
+
+# accuracy
+all.equal(R_model_coeffs, my_model_coeffs)
+
+# efficiency
+bench::mark(R_model_coeffs, my_model_coeffs)
+```
+
+Similarly, lets also double check the R-squared, Adjusted R-squared, F Statistic, F Statistic p-value, fitted values, and residuals using the same method as above:
+```{r}
+# checking R-squared
+R_model_summary$r.squared
+my_model$adj.r.squared
+
+# accuracy
+all.equal(R_model_summary$r.squared, my_model$r.squared)
+
+# efficiency
+bench::mark(R_model_summary$r.squared, my_model$r.squared)
+```
+
+```{r}
+# checking the Adjusted R-squared
+R_model_summary$adj.r.squared
+my_model$adj.r.squared
+
+# accuracy
+all.equal(R_model_summary$adj.r.squared, my_model$adj.r.squared)
+
+# efficiency
+bench::mark(R_model_summary$adj.r.squared, my_model$adj.r.squared)
+```
+
+```{r}
+# checking F statistic 
+R_model_summary$fstatistic[[1]]
+my_model$fstatistic
+
+lm_f_p_value <- R_model_summary$fstatistic[[1]]  # F-statistic value
+lm_f_p_value <- pf(lm_f_p_value, df1 = R_model_summary$fstatistic[[2]], 
+                     df2 = R_model_summary$fstatistic[[3]], lower.tail = FALSE)
+lm_f_p_value
+my_model$F_statistic_P_Value
+
+# accuracy
+all.equal(lm_f_p_value, my_model$F_statistic_P_Value)
+
+# efficiency
+bench::mark(lm_f_p_value, my_model$F_statistic_P_Value)
+```
+
+
+```{r}
+# checking fitted values
+R_fitted <- as.vector(R_model$fitted.values)
+my_fitted <- as.vector(my_model$Fitted_Values)
+head(R_fitted)
+head(my_fitted)
+
+# accuracy
+all.equal(R_fitted, my_fitted)
+
+# efficiency
+bench::mark(R_fitted, my_fitted)
+```
+
+```{r}
+# checking residuals
+R_res<- as.vector(R_model_summary$residuals)
+my_res <- as.vector(my_model$Residuals)
+head(R_res)
+head(my_res)
+
+# accuracy
+all.equal(R_res, my_res)
+
+# efficiency
+bench::mark(R_res, my_res)
+```
+
+We can once again see that form Example 2, our my_lm() function compared to R's lm() function produces the same results with similar efficiency even for a more complicated model such as the one in Example 1. Our model is well construct and provides accurate values mimicking R's lm() function well. 
+
+To wrap up, we have shown two example usages of the my_lm() function we have created. We compared our own function with R's lm() function and have achieved results that prove we replicated the basic parts of the lm() function well. 
+
+
+
+
