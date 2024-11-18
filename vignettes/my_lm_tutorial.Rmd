@@ -10,6 +10,7 @@ vignette: >
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(collapse = T, comment = "#>", fig.width=6, fig.height=4)
 options(tibble.print_min = 4L, tibble.print_max = 4L)
+library(bench)
 ```
 
 The my_lm() function was created to mimic the usage of the lm() function to run a basic linear regression model as a means of practicing writing packages in R. 
