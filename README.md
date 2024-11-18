@@ -2,6 +2,9 @@
 <!-- badges: start -->
   [![R-CMD-check](https://github.com/zooeelu/mylm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/zooeelu/mylm/actions/workflows/R-CMD-check.yaml)
   <!-- badges: end -->
+<!-- badges: start -->
+  ![codecov](https://codecov.io/gh/zooeelu/mylm/branch/main/graph/badge.svg)
+  <!-- badges: end -->
 
 ## Overview
 The "mylm" package is a package that contains the my_lm() function which was created to mimic the useage of the lm() function to run a basic linear regression model as a means of practicing writing packages in R. It can be used to study the association between multiple variables including interactions to help users make statistical inferences on their data. This function can return the corresponding linear model results such as a table of the coefficient estimates, standard errors, t-statistic values, and its corresponding p-values. It can also estimate how well the model fits the data using measurements such as the F statistic value and its p-value, R-squared, and adjusted R-squared values. Lastly, if interested, users may obtain the models fitted values and residual values.
