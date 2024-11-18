@@ -123,7 +123,7 @@ Similarly, lets also double check the R-squared, Adjusted R-squared, F Statistic
 ```{r}
 # checking R-squared
 R_model_summary$r.squared
-my_model$adj.r.squared
+my_model$r.squared
 
 # accuracy
 all.equal(R_model_summary$r.squared, my_model$r.squared)
