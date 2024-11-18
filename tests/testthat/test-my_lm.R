@@ -1,3 +1,4 @@
+##
 my_model <- my_lm(formula = Petal.Width ~ Sepal.Length, data = iris)
 R_model <- lm(formula = Petal.Width ~ Sepal.Length, data = iris)
 R_model_summary <- summary(R_model)
