@@ -49,6 +49,7 @@
 #' head(my_model3$Fitted_Values)
 #' head(my_model3$Residuals)
 #'
+#'@importFrom stats model.frame model.matrix model.response pf pt
 #' @export
 
 my_lm <- function(formula, data) {
