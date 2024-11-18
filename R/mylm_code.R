@@ -37,8 +37,8 @@
 #' head(my_model2$Fitted_Values)
 #' head(my_model2$Residuals)
 #'
-#' # Example 3 with interaction and polynomial effects
-#' my_model3 <- my_lm(formula = mpg ~ cyl + disp + hp + drat + wt + wt*cyl + I(hp^2), data = mtcars)
+#' # Example 3 with main effects and interaction effects
+#' my_model3 <- my_lm(formula = mpg ~ cyl + disp + hp + drat + wt + wt*cyl, data = mtcars)
 #'
 #' # to view information on the linear regression model otutput
 #' my_model3$Coefficients
