@@ -1,7 +1,7 @@
 # mylm package
 <!-- badges: start -->
   [![R-CMD-check](https://github.com/zooeelu/mylm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/zooeelu/mylm/actions/workflows/R-CMD-check.yaml)
-  ![codecov](https://codecov.io/gh/zooeelu/mylm/branch/main/graph/badge.svg)
+  [![codecov](https://codecov.io/github/zooeelu/mylm/graph/badge.svg?token=8BY02BUD71)](https://codecov.io/github/zooeelu/mylm)
   <!-- badges: end -->
 
 ## Overview
