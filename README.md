@@ -55,7 +55,7 @@ head(my_model$Residuals, 5)
 #> 5 -0.36437285
 ```
 
-```
+```r
 my_model <- my_lm(formula = mpg ~ cyl + hp + drat + wt + hp*wt + cyl*wt, data = mtcars)
 my_model$Coefficients
 #>                Estimate Std. Error     t value     Pr(>|t|)
