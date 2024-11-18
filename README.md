@@ -10,7 +10,7 @@ The "mylm" package is a package that contains the my_lm() function which was cre
 
 ## Installation
 ```{r, eval = FALSE}
-devtools::install_github("zooeelu/mylm")
+devtools::install_github("zooeelu/mylm", build_vignettes = T)
 ```
 
 ## Usage
